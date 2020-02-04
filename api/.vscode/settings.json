@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "venv/bin/python3.8",
+    "[python]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2 
+      }
+}
