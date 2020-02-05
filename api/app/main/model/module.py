@@ -24,3 +24,7 @@ class Module(db.Model):
 
   def __repr__(self):
     return "<Module '{}'>".format(self.title)
+
+
+Module.next_module_id = db.Column(db.Integer, db.ForeignKey(Module.id))
+Module.next_module = db.relationship(Module, backref='module', remote_side=Module.id)

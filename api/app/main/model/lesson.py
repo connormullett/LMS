@@ -14,9 +14,6 @@ class Lesson(db.Model):
 
   module_id = db.Column(db.Integer, db.ForeignKey('module.id'), nullable=False)
 
-  # TODO should relate another lesson
-  # next_lesson = db.Column(db.String(40), nullable=True)
-
   body = db.Column(db.String(1000), nullable=False)
   rating = db.Column(db.Numeric, nullable=False, default=0)
   created_at = db.Column(db.DateTime, nullable=False)
@@ -26,3 +23,6 @@ class Lesson(db.Model):
 
   def __repr__(self):
     return "<lesson '{}'>".format(self.title)
+
+Lesson.next_lesson_id = db.Column(db.Integer, db.ForeignKey(Lesson.id))
+Lesson.next_lesson = db.relationship(Lesson, backref='lesson', remote_side=Lesson.id)
