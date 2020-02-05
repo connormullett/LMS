@@ -8,6 +8,8 @@ from flask_script import Manager
 
 from app.main import create_app, db
 
+from app import blueprint
+
 # register models for migrate command
 from app.main.model import user
 from app.main.model import lesson
@@ -15,6 +17,8 @@ from app.main.model import module
 from app.main.model import course
 
 app = create_app(os.getenv('ENVIRONMENT'))
+app.register_blueprint(blueprint)
+
 app.app_context().push()
 
 manager = Manager(app)
