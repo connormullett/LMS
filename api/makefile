@@ -1,7 +1,4 @@
 
-environment=
-
-
 .PHONY: clean python-packages install test run all
 
 clean:
@@ -13,12 +10,15 @@ python packages:
 
 install: python-packages
 
-test:
-	ENVIRONMENT=$(ENVIRONMENT) DATABASE_URI=$(DATABASE_URI) SECRET_KEY=$(SECRET_KEY)\
-		python manage.py test
+set-environment:
+	ENVIRONMENT=$(ENVIRONMENT)
+	DATABASE_URI=$(DATABASE_URI)
+	SECRET_KEY=$(SECRET_KEY)
 
-run:
-	ENVIRONMENT=$(ENVIRONMENT) DATABASE_URI=$(DATABASE_URI) SECRET_KEY=$(SECRET_KEY)\
-		python manage.py run
+test: set-environment
+	python manage.py test
 
-all: clean install test run
+run: set-environment
+	python manage.py run
+
+all: set-environment clean install test run
