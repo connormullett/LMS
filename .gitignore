@@ -2,7 +2,9 @@
 # Created by https://www.gitignore.io/api/node,venv,react,flask,python,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=node,venv,react,flask,python,visualstudiocode
 
+# api specific directories
 dotenv
+migrations
 
 ### Flask ###
 instance/*

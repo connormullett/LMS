@@ -10,6 +10,8 @@ from app.main import create_app, db
 
 # register models for migrate command
 from app.main.model import user
+from app.main.model import lesson
+from app.main.model import module
 
 app = create_app(os.getenv('ENVIRONMENT'))
 app.app_context().push()
