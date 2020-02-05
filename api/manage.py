@@ -12,6 +12,7 @@ from app.main import create_app, db
 from app.main.model import user
 from app.main.model import lesson
 from app.main.model import module
+from app.main.model import course
 
 app = create_app(os.getenv('ENVIRONMENT'))
 app.app_context().push()

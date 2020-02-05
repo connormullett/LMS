@@ -1,5 +1,5 @@
 
-from .. import db, flask_bcrypt
+from .. import db
 
 
 class Lesson(db.Model):
