@@ -29,3 +29,11 @@ class UserDto:
     'password': fields.String(required=True, description='users desired password'),
     'confirm_password': fields.String(required=True, description='password confirmation'),
   })
+
+
+class AuthDto:
+  api = Namespace('auth', description='authentication')
+  user_auth = api.model('login', {
+    'email': fields.String(required=True, description='email address'),
+    'password': fields.String(required=True, description='password')
+  })
