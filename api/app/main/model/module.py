@@ -10,9 +10,12 @@ class Module(db.Model):
   title = db.Column(db.String(30), nullable=False, unique=True)
   
   author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-  author = db.relationship('author', backref=db.backref('user', uselist=False))
+  author = db.relationship('User', backref=db.backref('module_author', uselist=False))
   
-  lessons = db.relationship('lesson', backref=db.backref('lesson', uselist=False))
+  # this will have to change - one to many
+  lessons = db.relationship('Lesson', backref=db.backref('lesson', uselist=False))
+
+  next_module_id = db.Column(db.Integer, nullable=True)
 
   # prereqs - one to many (one module, many prereqs)
 
@@ -26,5 +29,5 @@ class Module(db.Model):
     return "<Module '{}'>".format(self.title)
 
 
-Module.next_module_id = db.Column(db.Integer, db.ForeignKey(Module.id))
-Module.next_module = db.relationship(Module, backref='module', remote_side=Module.id)
+# Module.next_module_id = db.Column(db.Integer, db.ForeignKey(Module.id))
+# Module.next_module = db.relationship(Module, backref='next_module', remote_side=Module.id)

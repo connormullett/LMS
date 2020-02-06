@@ -15,9 +15,11 @@ class User(db.Model):
   last_name = db.Column(db.String(30), nullable=True)
   password_hash = db.Column(db.String(100))
   bio = db.Column(db.String(200), nullable=True)
-  phone_number = db.Column(db.Integer, nullable=True)
+  country_code = db.Column(db.String(2), nullable=True)
+  area_code = db.Column(db.String(3), nullable=True)
+  number = db.Column(db.String(7), nullable=True)
   display_contact_info = db.Column(db.Boolean, nullable=False, default=False)
-  last_login = db.Column(db.DateTime, nullable=False)
+  last_login = db.Column(db.DateTime, nullable=True)
 
   @property
   def password(self):

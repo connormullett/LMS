@@ -10,9 +10,11 @@ class Lesson(db.Model):
   title = db.Column(db.String(30), unique=True, nullable=False)
 
   author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-  author = db.relationship('author', backref=db.backref('user', uselist=False))
+  author = db.relationship('User', backref=db.backref('lesson_author', uselist=False))
 
   module_id = db.Column(db.Integer, db.ForeignKey('module.id'), nullable=False)
+
+  next_lesson_id = db.Column(db.Integer, nullable=True)
 
   body = db.Column(db.String(1000), nullable=False)
   rating = db.Column(db.Numeric, nullable=False, default=0)
@@ -23,6 +25,3 @@ class Lesson(db.Model):
 
   def __repr__(self):
     return "<lesson '{}'>".format(self.title)
-
-Lesson.next_lesson_id = db.Column(db.Integer, db.ForeignKey(Lesson.id))
-Lesson.next_lesson = db.relationship(Lesson, backref='lesson', remote_side=Lesson.id)
