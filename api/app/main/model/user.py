@@ -17,7 +17,7 @@ class User(db.Model):
   bio = db.Column(db.String(200), nullable=True)
   country_code = db.Column(db.String(2), nullable=True)
   area_code = db.Column(db.String(3), nullable=True)
-  number = db.Column(db.String(7), nullable=True)
+  phone_number = db.Column(db.String(7), nullable=True)
   display_contact_info = db.Column(db.Boolean, nullable=False, default=False)
   last_login = db.Column(db.DateTime, nullable=True)
 
@@ -28,6 +28,15 @@ class User(db.Model):
   @password.setter
   def password(self, password):
     self.password_hash = flask_bcrypt.generate_password_hash(password).decode('utf-8')
+  
+  @property
+  def phonenumber(self):
+    return f'+{self.country_code}-({self.area_code})-{self.phone_number}'
+  
+  @phonenumber.setter
+  def phonenumber(self, number):
+    # helper function to parse string number to respective 3 columns
+    pass
   
   def check_password(self, password):
     return flask_bcrypt.check_password_hash(self.password_hash, password)

@@ -9,6 +9,7 @@ from ..service import user_service
 
 api = UserDto.api
 _user = UserDto.user
+_user_create = UserDto.user_create
 
 
 @api.route('/')
@@ -20,7 +21,7 @@ class UserList(Resource):
   
   @api.response(201, 'created')
   @api.doc('create new user')
-  @api.expect(_user, validate=True)
+  @api.expect(_user_create, validate=True)
   def post(self):
     data = request.json
 
