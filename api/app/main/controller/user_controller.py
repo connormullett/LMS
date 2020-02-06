@@ -24,40 +24,7 @@ class UserList(Resource):
   @api.expect(_user_create, validate=True)
   def post(self):
     data = request.json
-
-    if data.get('password') != data.get('confirm_password'):
-      return {'status': 'password mismatch'}, 400
-    
-    if not _check_password_requirements(data.get('password')):
-      return {
-        'status': 'Password must be between 6 and 20 characters, ' \
-        'contain atleast one uppercase and lowercase characters, ' \
-        'a number, and must have at least one special symbol'
-      }, 400
-    
-    if ' ' in data.get('username'):
-      return {
-        'status': 'fail',
-        'message': 'Username cannot have spaces'
-      }, 400
-
-    public_contact_options = {
-      'true': True,
-      'false': False
-    }
-
-    try:
-      data['display_contact_info'] = public_contact_options[data.get('display_contact_info').lower()]
-    except AttributeError:
-      data['display_contact_info'] = False
-
-    if not user_service.save_new_user(data=data):
-      return {
-        'status': 'failed to create user'
-      }, 400
-    return {
-      'status': 'created new user successfully'
-    }, 201
+    return user_service.save_new_user(data=data)
 
 
 @api.route('/<public_id>')
@@ -72,11 +39,3 @@ class User(Resource):
       api.abort(404)
     else:
       return user
-
-
-def _check_password_requirements(password):
-  pattern = re.compile('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$')
-  match = re.search(pattern, password)
-  
-  if match:
-    return True
