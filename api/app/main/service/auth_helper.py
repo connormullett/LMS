@@ -45,3 +45,30 @@ class Auth:
         'status': 'fail',
         'message': 'invalid or no auth token given'
       }, 403
+  
+
+  @staticmethod
+  def get_logged_in_user(new_request):
+    auth_token = new_request.headers.get('Authorization')
+    if auth_token:
+      resp = User.decode_auth_token(auth_token)
+      if not isinstance(resp, str):
+        user = User.query.filter_by(id=resp).first()
+        return { 
+          'status': 'success',
+          'data': {
+              'user_id': user.id,
+              'email': user.email,
+              'admin': user.admin,
+              'registered_on': str(user.registered_on)
+          }
+        }, 200
+      return {
+        'status': 'fail',
+        'message': resp
+      }, 401
+    else:
+      return {
+        'status': 'fail',
+        'message': 'provide valid auth token'
+      }, 401
