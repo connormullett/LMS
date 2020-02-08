@@ -19,7 +19,7 @@ class UserLogin(Resource):
 
 
 @api.route('/logout')
-class UserLogout:
+class UserLogout(Resource):
   @api.doc('logout a user')
   def post(self):
     # 'Authorization <token>' as header

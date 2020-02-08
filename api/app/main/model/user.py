@@ -1,6 +1,8 @@
 
 import datetime
 import jwt
+import re
+
 from app.main.model.blacklist import BlacklistToken
 
 from .. import db, flask_bcrypt
@@ -77,3 +79,34 @@ class User(db.Model):
       return 'signature expired'
     except jwt.InvalidTokenError:
       return 'invalid token'
+  
+  @staticmethod
+  def validate_user(data):
+
+    out = None
+
+    user = User.query.filter_by(email=data.get('email')).first()
+
+    if user or User.query.filter_by(username=data.get('username')).first():
+      out = 'user already exists'
+
+    if data.get('password') != data.get('confirm_password'):
+        out = 'password mismatch'
+
+    if not _check_password_requirements(data.get('password')):
+      out = 'Password must be between 6 and 20 characters, ' \
+        'contain atleast one uppercase and lowercase characters, ' \
+        'a number, and must have at least one special symbol'
+
+    if ' ' in data.get('username'):
+      out = 'Username cannot have spaces'
+    
+    return isinstance(out, str), out
+  
+
+def _check_password_requirements(password):
+  pattern = re.compile('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$')
+  match = re.search(pattern, password)
+
+  if match:
+    return True

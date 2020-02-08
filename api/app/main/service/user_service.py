@@ -7,48 +7,32 @@ from app.main.model.user import User
 
 
 def save_new_user(data):
-  user = User.query.filter_by(email=data['email']).first()
+  
+  status, message = User.validate_user(data)
 
-  if data.get('password') != data.get('confirm_password'):
-      return {'status': 'password mismatch'}, 400
-    
-    if not _check_password_requirements(data.get('password')):
-      return {
-        'status': 'Password must be between 6 and 20 characters, ' \
-        'contain atleast one uppercase and lowercase characters, ' \
-        'a number, and must have at least one special symbol'
-      }, 400
-    
-    if ' ' in data.get('username'):
-      return {
-        'status': 'fail',
-        'message': 'Username cannot have spaces'
-      }, 400
-
-    public_contact_options = {
-      'true': True,
-      'false': False
+  if status:
+    return {
+      'status': 'fail',
+      'message': message
     }
 
-    try:
-      data['display_contact_info'] = public_contact_options[data.get('display_contact_info').lower()]
-    except AttributeError:
-      data['display_contact_info'] = False
+  try:
+    data['display_contact_info'] = _public_contact_options[data.get('display_contact_info').lower()]
+  except AttributeError:
+    data['display_contact_info'] = False
 
-  if not user:
-    new_user = User(
-      public_id=str(uuid.uuid4()),
-      email=data['email'],
-      username=data['username'],
-      password=data['password'],
-      registered_on=datetime.datetime.utcnow(),
-      first_name=data['first_name'],
-      last_name=data['last_name'],
-      bio=data['bio'],
-      # phonenumber=data['phone_number'],
-    )
-    _save_changes(new_user)
-  
+  new_user = User(
+    public_id=str(uuid.uuid4()),
+    email=data['email'],
+    username=data['username'],
+    password=data['password'],
+    registered_on=datetime.datetime.utcnow(),
+    first_name=data['first_name'],
+    last_name=data['last_name'],
+    bio=data['bio'],
+    # phonenumber=data['phone_number'],
+  )
+  _save_changes(new_user)
   return generate_token(new_user)
 
 
@@ -79,9 +63,7 @@ def generate_token(user):
     }, 401
 
 
-def _check_password_requirements(password):
-  pattern = re.compile('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$')
-  match = re.search(pattern, password)
-  
-  if match:
-    return True
+_public_contact_options = {
+  'true': True,
+  'false': False
+}

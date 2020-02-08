@@ -7,7 +7,13 @@ def save_token(token):
   try:
     db.session.add(blacklist_token)
     db.session.commit()
-    return True
+    return {
+      'status': 'success',
+      'message': 'successfuly logged out'
+    }, 200
   except Exception:
-    return False
+    return {
+      'status': 'fail',
+      'message': 'an error occured'
+    }, 500
   
