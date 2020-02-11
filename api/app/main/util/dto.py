@@ -30,6 +30,16 @@ class UserDto:
     'confirm_password': fields.String(required=True, description='password confirmation'),
   })
 
+  user_update = api.model('user_update', {
+    'email': fields.String(required=True, description='email address'),
+    'username': fields.String(required=True, descrition='username'),
+    'first_name': fields.String(required=False, description='users first name (optional)'),
+    'last_name': fields.String(required=False, description='users last name (optional)'),
+    'phone_number': fields.String(required=False, description='users phone number (optional)'),
+    'display_contact_info': fields.Boolean(required=False, description='should users pii be displayed'),
+    'bio': fields.String(required=False, description='users biography'),
+  })
+
 
 class AuthDto:
   api = Namespace('auth', description='authentication')
