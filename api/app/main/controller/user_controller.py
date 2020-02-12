@@ -85,12 +85,12 @@ class UserMe(Resource):
   def put(self):
     data = request.json
     user_data = auth_helper.Auth.get_logged_in_user(request)
-    user = user_data['data']
+    user = user_data[0]['data']
     return user_service.update_user(user['public_id'], data)
 
   @api.doc('delete users account')
   @token_required
   def delete(self):
     user_data = auth_helper.Auth.get_logged_in_user(request)
-    user = user_data['data']
+    user = user_data[0]['data']
     return user_service.delete_user_by_id(user['public_id'])
