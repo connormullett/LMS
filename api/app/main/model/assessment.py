@@ -1,6 +1,6 @@
 
 from .. import db
-from question import Question
+from .question import Question
 
 
 class Assessment(db.Model):

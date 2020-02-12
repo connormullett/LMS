@@ -15,6 +15,8 @@ from app.main.model import user
 from app.main.model import lesson
 from app.main.model import module
 from app.main.model import course
+from app.main.model import assessment
+from app.main.model import question
 
 app = create_app(os.getenv('ENVIRONMENT'))
 app.register_blueprint(blueprint)
