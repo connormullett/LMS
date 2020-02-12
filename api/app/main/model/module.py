@@ -13,7 +13,7 @@ class Module(db.Model):
   author = db.relationship('User', backref=db.backref('module_author', uselist=False))
   
   # this will have to change - one to many
-  lessons = db.relationship('Lesson', backref=db.backref('lesson', uselist=False))
+  lessons = db.relationship('Lesson', backref=db.backref('lesson', uselist=True))
 
   next_module_id = db.Column(db.Integer, nullable=True)
 
