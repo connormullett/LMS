@@ -62,3 +62,12 @@ class CourseDto:
     'description': fields.String(required=False, description='short description of the course'),
     'is_public': fields.Boolean(required=False, description='does the course get displayed')
   })
+
+  course = api.model('course', {
+    'title': fields.String(description='title of the course'),
+    'description': fields.String(description='short description of the course'),
+    'is_public': fields.Boolean(description='does the course get displayed'),
+    'author_id': fields.Integer(description='id of the user that created the course'),
+    'created_on': fields.DateTime(description='when the course was created'),
+    'modified_on': fields.DateTime(description='last time the course was updated')
+  })

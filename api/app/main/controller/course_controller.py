@@ -9,6 +9,7 @@ from ..service import course_service, auth_helper
 
 api = CourseDto.api
 _course_create = CourseDto.course_create
+_course = CourseDto.course
 
 
 @api.route('/')
@@ -24,3 +25,24 @@ class CourseList(Resource):
     print(user_object)
     data['public_id'] = user_object[0]['data']['public_id']
     return course_service.save_new_course(data)
+  
+  @api.doc('get all courses')
+  @api.marshal_list_with(_course, envelope='data')
+  def get(self):
+    return course_service.get_all_courses()
+
+
+@api.route('/<course_id>')
+@api.param('course_id', 'id of the course')
+@api.response(404, 'course not found')
+class Course(Resource):
+  # /course/<id> ops
+
+  @api.doc('get a course')
+  @api.marshal_with(_course)
+  def get(self, course_id):
+    course = course_service.get_course_by_id(course_id)
+    if not course:
+      api.abort(404)
+    else:
+      return course

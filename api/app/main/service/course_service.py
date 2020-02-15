@@ -24,6 +24,17 @@ def save_new_course(data):
     'status': 'created',
   }, 201
 
+
+def get_all_courses():
+  return Course.query.filter_by(is_public=True).all()
+
+
+def get_course_by_id(course_id):
+  course = Course.query.filter_by(id=course_id).first()
+  print(course.author.public_id)
+  return course
+
+
 def _save_changes(data):
   db.session.add(data)
   db.session.commit()
