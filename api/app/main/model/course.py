@@ -17,6 +17,9 @@ class Course(db.Model):
   next_course_id = db.Column(db.Integer, nullable=True)
   views = db.Column(db.Integer)
 
+  created_on = db.Column(db.DateTime, nullable=False)
+  modified_on = db.Column(db.DateTime, nullable=True)
+
   # todo: roles, students
 
 

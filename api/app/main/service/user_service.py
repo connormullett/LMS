@@ -30,7 +30,9 @@ def save_new_user(data):
     first_name=data['first_name'],
     last_name=data['last_name'],
     bio=data['bio'],
-    # phonenumber=data['phone_number'],
+    country_code=data['country_code'],
+    area_code=data['area_code'],
+    phone_number=data['phone_number']
   )
   _save_changes(new_user)
   return generate_token(new_user)

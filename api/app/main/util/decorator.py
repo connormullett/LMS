@@ -1,6 +1,6 @@
 
 from functools import wraps
-from flask import request
+from flask import request, g
 
 from app.main.service.auth_helper import Auth
 
@@ -14,6 +14,7 @@ def token_required(f):
     if not token:
       return data, status
 
+    g.user = {'user_id': token['public_id']}
     return f(*args, **kwargs)
 
   return decorated
