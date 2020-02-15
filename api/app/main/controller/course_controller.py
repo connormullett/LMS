@@ -4,7 +4,7 @@ from flask_restplus import Resource
 
 from ..util.dto import CourseDto
 from ..util.decorator import token_required, admin_token_required
-from ..service import course_service, auth_helper
+from ..service import course_service, auth_helper, user_service
 
 
 api = CourseDto.api
@@ -46,3 +46,14 @@ class Course(Resource):
       api.abort(404)
     else:
       return course
+  
+
+@api.route('/me')
+class CourseMe(Resource):
+
+  @api.doc('get logged in courses')
+  @api.marshal_with(_course)
+  @token_required
+  def get(self):
+    user = auth_helper.Auth.get_logged_in_user(request)
+    return course_service.get_courses_by_users_id(user[0]['data']['id'])

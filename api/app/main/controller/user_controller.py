@@ -10,6 +10,7 @@ from ..service import user_service, auth_helper
 
 api = UserDto.api
 _user = UserDto.user
+_user_list = UserDto.user_list
 _user_create = UserDto.user_create
 _user_update = UserDto.user_update
 
@@ -19,7 +20,7 @@ class UserList(Resource):
   # /user ops
 
   @api.doc('list all users')
-  @api.marshal_list_with(_user, envelope='data')
+  @api.marshal_list_with(_user_list, envelope='data')
   def get(self):
     return user_service.get_all_users()
 
@@ -38,7 +39,7 @@ class User(Resource):
   # /user/<id> ops
 
   @api.doc('get a user')
-  @api.marshal_with(_user)
+  @api.marshal_with(_user, skip_none=True)
   def get(self, public_id):
     user = user_service.get_user_by_public_id(public_id)
     if not user:

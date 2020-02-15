@@ -30,9 +30,11 @@ def get_all_courses():
 
 
 def get_course_by_id(course_id):
-  course = Course.query.filter_by(id=course_id).first()
-  print(course.author.public_id)
-  return course
+  return Course.query.filter_by(id=course_id).first()
+
+
+def get_courses_by_users_id(user_id):
+  return Course.query.filter_by(author_id=user_id).all()
 
 
 def _save_changes(data):

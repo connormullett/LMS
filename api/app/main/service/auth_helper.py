@@ -12,6 +12,7 @@ class Auth:
       if user and user.check_password(data.get('password')):
         auth_token = user.encode_auth_token(user.id)
         if auth_token:
+          user.set_login()
           return {
             'status': 'success',
             'Authorization': auth_token.decode()

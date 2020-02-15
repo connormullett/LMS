@@ -1,5 +1,6 @@
 
-import datetime
+import datetime, decimal
+import json
 import jwt
 import re
 
@@ -39,6 +40,10 @@ class User(db.Model):
   
   def check_password(self, password):
     return flask_bcrypt.check_password_hash(self.password_hash, password)
+
+  def set_login(self):
+    self.last_login = datetime.datetime.utcnow()
+    db.session.commit()
   
   def __repr__(self):
     return "<User '{}'>".format(self.username)
