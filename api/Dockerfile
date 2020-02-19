@@ -7,7 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 copy . .
 
-RUN source dotenv
 RUN python manage.py db init
 
 RUN python manage.py db migrate
