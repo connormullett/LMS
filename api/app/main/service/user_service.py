@@ -69,7 +69,7 @@ def delete_user_by_id(public_id):
   user = User.query.filter_by(public_id=public_id).first()
   db.session.delete(user)
   db.session.commit()
-  return None, 204
+  return {'status': 'deleted'}, 200
 
 
 def _save_changes(data):

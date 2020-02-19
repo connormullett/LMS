@@ -2,7 +2,7 @@
 import re
 
 from flask import request
-from flask_restplus import Resource
+from flask_restplus import Resource, marshal
 
 from ..util.dto import UserDto
 from ..util.decorator import token_required, admin_token_required
@@ -10,6 +10,7 @@ from ..service import user_service, auth_helper
 
 api = UserDto.api
 _user = UserDto.user
+_user_private = UserDto.user_private
 _user_list = UserDto.user_list
 _user_create = UserDto.user_create
 _user_update = UserDto.user_update
@@ -20,7 +21,7 @@ class UserList(Resource):
   # /user ops
 
   @api.doc('list all users')
-  @api.marshal_list_with(_user_list, envelope='data')
+  @api.marshal_list_with(_user_list, envelope='data', skip_none=True)
   def get(self):
     return user_service.get_all_users()
 
@@ -44,8 +45,11 @@ class User(Resource):
     user = user_service.get_user_by_public_id(public_id)
     if not user:
       api.abort(404)
-    else:
-      return user
+    
+    if user.display_contact_info:
+      return marshal(user, _user), 200
+    
+    return marshal(user, _user_private), 200
 
 
   @api.doc('admin update a user')

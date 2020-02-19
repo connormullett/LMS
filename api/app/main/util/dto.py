@@ -4,7 +4,28 @@ from flask_restplus import Namespace, fields
 
 class UserDto:
   api = Namespace('user', description='user related ops')
-  user = api.model('user', {
+  user = api.model('user public', {
+    'email': fields.String(required=True, description='email address'),
+    'public_id': fields.String(description='users public facing id'),
+    'username': fields.String(required=True, descrition='username'),
+    'first_name': fields.String(required=False, description='users first name (optional)'),
+    'last_name': fields.String(required=False, description='users last name (optional)'),
+    'bio': fields.String(required=False, description='users biography'),
+    'registered_on': fields.DateTime(required=False, description='when the user joined'),
+    'last_login': fields.DateTime(required=False, description='when the user last logged in')
+  })
+
+  user_private = api.model('user private', {
+    'public_id': fields.String(description='users public facing id'),
+    'username': fields.String(required=True, descrition='username'),
+    'first_name': fields.String(required=False, description='users first name (optional)'),
+    'last_name': fields.String(required=False, description='users last name (optional)'),
+    'bio': fields.String(required=False, description='users biography'),
+    'registered_on': fields.DateTime(required=False, description='when the user joined'),
+    'last_login': fields.DateTime(required=False, description='when the user last logged in')
+  })
+
+  user_me = api.model('user profile', {
     'email': fields.String(required=True, description='email address'),
     'public_id': fields.String(description='users public facing id'),
     'username': fields.String(required=True, descrition='username'),
