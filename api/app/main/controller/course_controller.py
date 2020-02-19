@@ -27,7 +27,7 @@ class CourseList(Resource):
     return course_service.save_new_course(data)
   
   @api.doc('get all courses')
-  @api.marshal_list_with(_course, envelope='data')
+  @api.marshal_list_with(_course, envelope='data', skip_none=True)
   def get(self):
     return course_service.get_all_public_courses()
 

@@ -37,7 +37,8 @@ class UserDto:
     'display_contact_info': fields.Boolean(required=False, description='should users pii be displayed'),
     'bio': fields.String(required=False, description='users biography'),
     'registered_on': fields.DateTime(required=False, description='when the user joined'),
-    'last_login': fields.DateTime(required=False, description='when the user last logged in')
+    'last_login': fields.DateTime(required=False, description='when the user last logged in'),
+    'display_contact_info': fields.Boolean(description='should users private contact data be shown')
   })
 
   user_list = api.model('user_list', {

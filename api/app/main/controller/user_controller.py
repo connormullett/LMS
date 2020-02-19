@@ -14,6 +14,7 @@ _user_private = UserDto.user_private
 _user_list = UserDto.user_list
 _user_create = UserDto.user_create
 _user_update = UserDto.user_update
+_user_me = UserDto.user_me
 
 
 @api.route('/')
@@ -40,7 +41,6 @@ class User(Resource):
   # /user/<id> ops
 
   @api.doc('get a user')
-  @api.marshal_with(_user, skip_none=True)
   def get(self, public_id):
     user = user_service.get_user_by_public_id(public_id)
     if not user:
@@ -80,9 +80,16 @@ class UserMe(Resource):
 
   @api.doc('return current logged in user')
   @token_required
+  @api.marshal_with(_user_me, skip_none=True)
   def get(self):
-    user_object = auth_helper.Auth.get_logged_in_user(request)
-    return user_object
+    data, status = auth_helper.Auth.get_logged_in_user(request)
+
+    if status != 200:
+      return data, status
+
+    print(data)
+    return user_service.get_user_by_public_id(data['data']['public_id'])
+    
 
   @api.doc('update users account')
   @api.expect(_user_update)
