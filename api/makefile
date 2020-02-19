@@ -1,5 +1,5 @@
 
-.PHONY: clean python-packages install test run all
+.PHONY: clean python-packages install migrate test run all
 
 clean:
 	find . -type f -name '*.pyc' -delete
@@ -15,5 +15,9 @@ test:
 
 run:
 	python manage.py run
+
+migrate:
+	python manage.py db migrate
+	python manage.py db upgrade
 
 all: clean install test run
