@@ -11,6 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 copy . .
 
+RUN rm -rf ./migrations
 RUN python manage.py db init
 
 RUN python manage.py db migrate
