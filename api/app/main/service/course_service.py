@@ -25,7 +25,7 @@ def save_new_course(data):
   }, 201
 
 
-def get_all_courses():
+def get_all_public_courses():
   return Course.query.filter_by(is_public=True).all()
 
 
@@ -37,6 +37,26 @@ def get_courses_by_users_id(user_id):
   return Course.query.filter_by(author_id=user_id).all()
 
 
-def _save_changes(data):
-  db.session.add(data)
+def update_course(course_id, data):
+  course = get_course_by_id(course_id)
+  for key, item in data.items():
+    setattr(course, key, item)
+  course.modified_on = datetime.datetime.utcnow()
+  db.session.commit()
+  return { 
+    'status': 'updated course'
+  }, 200
+
+
+def delete_course_by_id(course_id):
+  course = get_course_by_id(course_id)
+  db.session.delete(course)
+  _save_changes()
+  return {'status': 'deleted'}, 200
+
+
+def _save_changes(data=None):
+  if data:
+    db.session.add(data)
+
   db.session.commit()

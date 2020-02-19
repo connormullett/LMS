@@ -69,6 +69,7 @@ class CourseDto:
   })
 
   course = api.model('course', {
+    'id': fields.Integer(description='course unique identifier'),
     'title': fields.String(description='title of the course'),
     'description': fields.String(description='short description of the course'),
     'is_public': fields.Boolean(description='does the course get displayed'),
@@ -76,5 +77,11 @@ class CourseDto:
     'modified_on': fields.DateTime(description='last time the course was updated'),
     'author_id': fields.String(description='id of the user that created the course',
       attribute='author.public_id'),
-    'author': fields.Nested(UserDto.user)
+    'author': fields.Nested(UserDto.user_list)
+  })
+
+  course_update = api.model('course_update', {
+    'title': fields.String(description='title of the course'),
+    'description': fields.String(description='short description of the course'),
+    'is_public': fields.Boolean(description='does the course get displayed')
   })
