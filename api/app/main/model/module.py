@@ -11,6 +11,7 @@ class Module(db.Model):
   
   author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   author = db.relationship('User', backref=db.backref('module_author', uselist=False))
+  course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
   
   # this will have to change - one to many
   lessons = db.relationship('Lesson', backref=db.backref('lesson', uselist=True))
