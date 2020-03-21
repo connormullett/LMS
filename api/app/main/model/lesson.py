@@ -17,7 +17,6 @@ class Lesson(db.Model):
   next_lesson_id = db.Column(db.Integer, nullable=True)
 
   body = db.Column(db.String(1000), nullable=False)
-  rating = db.Column(db.Numeric, nullable=False, default=0)
   created_at = db.Column(db.DateTime, nullable=False)
   modified_at = db.Column(db.DateTime, nullable=True)
   views = db.Column(db.Integer)

@@ -8,6 +8,7 @@ class Module(db.Model):
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   title = db.Column(db.String(30), nullable=False, unique=True)
+  description = db.Column(db.String(200), nullable=True)
   
   author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
   author = db.relationship('User', backref=db.backref('module_author', uselist=False))
@@ -20,7 +21,6 @@ class Module(db.Model):
 
   # prereqs - one to many (one module, many prereqs)
 
-  rating = db.Column(db.Numeric, nullable=False, default=0)
   created_at = db.Column(db.DateTime, nullable=False)
   modified_at = db.Column(db.DateTime, nullable=True)
   views = db.Column(db.Integer)

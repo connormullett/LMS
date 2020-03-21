@@ -100,10 +100,39 @@ class CourseDto:
     'author_id': fields.String(description='id of the user that created the course',
       attribute='author.public_id'),
     'author': fields.Nested(UserDto.user_list)
+    # TODO: added modules for nested attributes
   })
 
   course_update = api.model('course_update', {
     'title': fields.String(description='title of the course'),
     'description': fields.String(description='short description of the course'),
     'is_public': fields.Boolean(description='does the course get displayed')
+  })
+
+
+class ModuleDto:
+  api = Namespace('module_create', description='module model')
+  module_create = api.model('module_create', {
+    'title': fields.String(),
+    'is_public': fields.Boolean(required=False),
+    'descriptiond': fields.String(required=False)
+  })
+
+  module = api.model('module', {
+    'id': fields.Integer(description='unique module identifier'),
+    'title': fields.String(description='title of the module'),
+    'description': fields.String(description='short description of the module'),
+    'author_id': fields.String(description='id of the user that created the module'),
+    'author': fields.Nested(UserDto.user_list),
+    # TODO: add lessons as nested attributes
+    'created_at': fields.DateTime(description='timestamp of module creation'),
+    'modified_at': fields.DateTime(description='timestamp of when module was last edited'),
+    'views': fields.Integer(description='view count of module'),
+    'is_public': fields.Boolean(description='defines if module can be viewed publicly')
+  })
+
+  module_update = api.model('module_update', {
+    'title': fields.String(),
+    'description': fields.String(),
+    'is_public': fields.Boolean()
   })
