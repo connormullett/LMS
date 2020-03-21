@@ -2,6 +2,7 @@
 .PHONY: clean python-packages install migrate test run all
 
 clean:
+	find . -type d -name '__pycache__' -delete
 	find . -type f -name '*.pyc' -delete
 	find . -type f -name '*.log' -delete
 
