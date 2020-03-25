@@ -25,6 +25,10 @@ def create_new_module(data):
   }, 201
 
 
+def get_all_public_modules():
+  return Module.query.filter_by(is_public=True)
+
+
 def get_modules_by_course_id(course_id):
   return Module.query.filter_by(course_id=course_id).filter_by(is_public=True).all()
 
@@ -48,7 +52,7 @@ def update_module(module_id, data):
   }, 200
 
 
-def delete_module(module_id):
+def delete_module_by_id(module_id):
   module = get_module_by_id(module_id)
   db.session.delete(module)
   _save_changes()

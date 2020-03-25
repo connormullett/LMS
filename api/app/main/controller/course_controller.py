@@ -57,6 +57,9 @@ class Course(Resource):
     user = user_service.get_user_by_public_id(user_data[0]['data']['public_id'])
     course = course_service.get_course_by_id(course_id)
 
+    if not course:
+      api.abort(404)
+
     if user.id != course.author.id:
       api.abort(403)
     return course_service.update_course(course_id, data)
