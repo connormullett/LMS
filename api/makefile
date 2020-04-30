@@ -21,4 +21,4 @@ migrate:
 	python manage.py db migrate
 	python manage.py db upgrade
 
-all: clean install test run
+all: install test run
