@@ -18,8 +18,8 @@ class LessonList(Resource):
   # /link ops
 
   @api.doc('create a lesson')
-  @token_required()
-  @api.expect(_link_create, validate=True)
+  @token_required
+  @api.expect(_lesson_create, validate=True)
   def post(self):
     data = request.json
     user_object = auth_helper.Auth.get_logged_in_user(request)
