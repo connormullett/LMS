@@ -31,7 +31,7 @@ class LinkList(Resource):
 @api.param('link_id', 'id of link')
 @api.response(404, 'link not found')
 @api.response(403, 'permission denied')
-class Link(resource):
+class Link(Resource):
   # /link/<id> ops
 
   @api.doc('get a link')
