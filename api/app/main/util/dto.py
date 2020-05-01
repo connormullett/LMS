@@ -142,7 +142,7 @@ class LessonDto:
   api = Namespace('lesson', description='lesson module')
   lesson_create = api.model('lesson_create', {
     'title': fields.String(description='title of the module'),
-    'body': fields.Stringer(description='text body of the lesson'),
+    'body': fields.String(description='text body of the lesson'),
     'is_public': fields.Boolean(description='defines if module can be viewed publicly')
   })
 
@@ -152,7 +152,7 @@ class LessonDto:
     'description': fields.String(description='short description of the module'),
     'author_id': fields.String(description='id of the user that created the module'),
     'author': fields.Nested(UserDto.user_list),
-    'body': fields.Stringer(description='text body of the lesson'),
+    'body': fields.String(description='text body of the lesson'),
     'created_at': fields.DateTime(description='timestamp of module creation'),
     'modified_at': fields.DateTime(description='timestamp of when module was last edited'),
     'views': fields.Integer(description='view count of module'),
@@ -161,13 +161,13 @@ class LessonDto:
 
   lesson_update = api.model('lesson_update', {
     'title': fields.String(description='title of the module'),
-    'body': fields.Stringer(description='text body of the lesson'),
+    'body': fields.String(description='text body of the lesson'),
     'description': fields.String(description='short description of the module')
   })
 
 
 class LinkDto:
-  api.Namespace('link')
+  api = Namespace('link')
   link_create = api.model('link_create', {
     'link_text': fields.String(),
     'hyper_link': fields.String(),
@@ -178,6 +178,12 @@ class LinkDto:
     'id': fields.Integer(),
     'author_id': fields.String(),
     'author': fields.Nested(UserDto.user_list),
+    'link_text': fields.String(),
+    'hyper_link': fields.String(),
+    'is_public': fields.Boolean()
+  })
+
+  link_update = api.model('link_update', {
     'link_text': fields.String(),
     'hyper_link': fields.String(),
     'is_public': fields.Boolean()
