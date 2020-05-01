@@ -139,7 +139,7 @@ class ModuleDto:
 
 
 class LessonDto:
-  api = namespace('lesson', description='lesson module')
+  api = Namespace('lesson', description='lesson module')
   lesson_create = api.model('lesson_create', {
     'title': fields.String(description='title of the module'),
     'body': fields.Stringer(description='text body of the lesson'),
@@ -163,4 +163,22 @@ class LessonDto:
     'title': fields.String(description='title of the module'),
     'body': fields.Stringer(description='text body of the lesson'),
     'description': fields.String(description='short description of the module')
+  })
+
+
+class LinkDto:
+  api.Namespace('link')
+  link_create = api.model('link_create', {
+    'link_text': fields.String(),
+    'hyper_link': fields.String(),
+    'is_public': fields.Boolean()
+  })
+
+  link = api.model('link', {
+    'id': fields.Integer(),
+    'author_id': fields.String(),
+    'author': fields.Nested(UserDto.user_list),
+    'link_text': fields.String(),
+    'hyper_link': fields.String(),
+    'is_public': fields.Boolean()
   })
