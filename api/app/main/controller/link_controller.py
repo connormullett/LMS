@@ -51,6 +51,8 @@ class Link(resource):
     user_data = auth_helper.Auth.get_logged_in_user(request)
     user = user_service.get_user_by_public_id(user_data[0]['data']['public_id'])
 
+    link = link_service.get_link_by_id(link_id)
+
     if not link:
       api.abort(404)
     
