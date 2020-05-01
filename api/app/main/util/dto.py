@@ -82,40 +82,13 @@ class AuthDto:
   })
 
 
-class CourseDto:
-  api = Namespace('course', description='courses model')
-  course_create = api.model('course_create', {
-    'title': fields.String(required=True, description='title of the course'),
-    'description': fields.String(required=False, description='short description of the course'),
-    'is_public': fields.Boolean(required=False, description='does the course get displayed')
-  })
-
-  course = api.model('course', {
-    'id': fields.Integer(description='course unique identifier'),
-    'title': fields.String(description='title of the course'),
-    'description': fields.String(description='short description of the course'),
-    'is_public': fields.Boolean(description='does the course get displayed'),
-    'created_on': fields.DateTime(description='when the course was created'),
-    'modified_on': fields.DateTime(description='last time the course was updated'),
-    'author_id': fields.String(description='id of the user that created the course',
-      attribute='author.public_id'),
-    'author': fields.Nested(UserDto.user_list)
-    # TODO: added modules for nested attributes
-  })
-
-  course_update = api.model('course_update', {
-    'title': fields.String(description='title of the course'),
-    'description': fields.String(description='short description of the course'),
-    'is_public': fields.Boolean(description='does the course get displayed')
-  })
-
-
 class ModuleDto:
   api = Namespace('module', description='module model')
   module_create = api.model('module_create', {
     'title': fields.String(),
     'is_public': fields.Boolean(required=False),
-    'description': fields.String(required=False)
+    'description': fields.String(required=False),
+    'course_id': fields.Integer(required=True)
   })
 
   module = api.model('module', {
@@ -135,6 +108,35 @@ class ModuleDto:
     'title': fields.String(),
     'description': fields.String(),
     'is_public': fields.Boolean()
+  })
+
+
+class CourseDto:
+  api = Namespace('course', description='courses model')
+  course_create = api.model('course_create', {
+    'title': fields.String(required=True, description='title of the course'),
+    'description': fields.String(required=False, description='short description of the course'),
+    'is_public': fields.Boolean(required=False, description='does the course get displayed')
+  })
+
+  course = api.model('course', {
+    'id': fields.Integer(description='course unique identifier'),
+    'title': fields.String(description='title of the course'),
+    'description': fields.String(description='short description of the course'),
+    'is_public': fields.Boolean(description='does the course get displayed'),
+    'created_on': fields.DateTime(description='when the course was created'),
+    'modified_on': fields.DateTime(description='last time the course was updated'),
+    'author_id': fields.String(description='id of the user that created the course',
+      attribute='author.public_id'),
+    'author': fields.Nested(UserDto.user_list),
+    'modules': fields.Nested(ModuleDto.module)
+    # TODO: added modules for nested attributes
+  })
+
+  course_update = api.model('course_update', {
+    'title': fields.String(description='title of the course'),
+    'description': fields.String(description='short description of the course'),
+    'is_public': fields.Boolean(description='does the course get displayed')
   })
 
 

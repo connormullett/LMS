@@ -32,7 +32,7 @@ class CourseList(Resource):
     return course_service.get_all_public_courses()
 
 
-@api.route('/<course_id>')
+@api.route('/<int:course_id>')
 @api.param('course_id', 'id of the course')
 @api.response(404, 'course not found')
 @api.response(403, 'permission denied')

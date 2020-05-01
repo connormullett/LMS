@@ -13,7 +13,7 @@ class Course(db.Model):
   description = db.Column(db.String(200), nullable=True)
   is_public = db.Column(db.Boolean, default=False, nullable=False)
 
-  # TODO: need module backref
+  modules = db.relationship('Module', backref='modules')
 
   # TODO: change these to keys that refer back to this table for next values
   next_course_id = db.Column(db.Integer, nullable=True)
