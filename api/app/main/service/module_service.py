@@ -16,7 +16,8 @@ def create_new_module(data):
     author_id=user_id,
     created_at=datetime.datetime.utcnow(),
     views=0,
-    is_public=data.get('is_public')
+    is_public=data.get('is_public'),
+    course_id=data.get('course_id')
   )
 
   _save_changes(new_module)

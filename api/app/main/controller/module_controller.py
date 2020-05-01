@@ -46,7 +46,7 @@ class Module(Resource):
     if not module:
       api.abort(404)
     else:
-      return course
+      return module
   
   @api.doc('update a module')
   @api.expect(_module_update, validate=True)

@@ -97,6 +97,7 @@ class ModuleDto:
     'description': fields.String(description='short description of the module'),
     'author_id': fields.String(description='id of the user that created the module'),
     'author': fields.Nested(UserDto.user_list),
+    'course_id': fields.Integer(),
     # TODO: add lessons as nested attributes
     'created_at': fields.DateTime(description='timestamp of module creation'),
     'modified_at': fields.DateTime(description='timestamp of when module was last edited'),
