@@ -13,5 +13,7 @@ class Link(db.Model):
   hyper_link = db.Column(db.String(100), nullable=False)
   is_public = db.Column(db.Boolean, default=False)
 
+  created_at = db.Column(db.DateTime, nullable=False)
+  modified_at = db.Column(db.DateTime, nullable=True)
   def __repr__(self):
     return "<Link '{}'>".format(self.title)
